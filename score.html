@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volleyball Scoreboard</title>
+    <style>
+        html, body {
+            width: auto;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: transparent;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #232B96;
+            color: white;
+            
+            border: 8px solid white;
+            width: fit-content;
+            height: fit-content;
+            margin-bottom: 20px;
+        }
+        .colorTeam1 {
+            width: 30px;
+            height: 80px;
+            background: red;
+        }
+        .colorTeam2 {
+            width: 30px;
+            height: 80px;
+            background: green;
+        }
+        .team {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            font-size: 36px;
+            font-weight: bold;
+            background: #232B96;
+            padding: 15px;
+        }
+        .set {
+            width: 90px;
+            height: 80px;
+            background: #232B96;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-left: 5px solid white;
+            border-right: 5px solid white;
+        }
+        .set span {
+            font-size: 14px;
+            margin-bottom: -5px;
+        }
+        .score1 {
+            width: 90px;
+            height: 80px;
+            background: #BE4330;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-right: 5px solid white;
+        }
+        .score2 {
+            width: 90px;
+            height: 80px;
+            background: #BE4330;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-left: 5px solid white;
+        }
+        .vs {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            padding: 0 20px;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .button-container button {
+            font-size: 24px;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            background: #ff9800;
+            color: white;
+            width: 70px;
+            height: 50px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="scoreboard">
+        <div class="colorTeam1"></div>
+        <div class="team" id="team1" contenteditable="true">JPN</div>
+        <div class="set" id="set1" contenteditable="true"><span>SETS</span><div>0</div></div>
+        <div class="score1" id="score1" contenteditable="true">0</div>
+        <div class="vs">VS</div>
+        <div class="score2" id="score2" contenteditable="true">0</div>
+        <div class="set" id="set2" contenteditable="true"><span>SETS</span><div>0</div></div>
+        <div class="team" id="team2" contenteditable="true">ARG</div>
+        <div class="colorTeam2"></div>
+    </div>
+    <div class="controls">
+        <div class="button-container">
+            <button onclick="updateScore('score1', 1)">▲</button>
+            <button onclick="updateScore('score1', -1)">▼</button>
+        </div>
+        <div class="button-container">
+            <button onclick="updateScore('score2', 1)">▲</button>
+            <button onclick="updateScore('score2', -1)">▼</button>
+        </div>
+    </div>
+    <script>
+        function updateScore(teamScoreId, change) {
+            let score = document.getElementById(teamScoreId);
+            let set1 = document.getElementById("set1").lastElementChild;
+            let set2 = document.getElementById("set2").lastElementChild;
+            let score1 = document.getElementById("score1");
+            let score2 = document.getElementById("score2");
+
+            let newScore = parseInt(score.innerText) + change;
+            if (newScore < 0) newScore = 0;
+            score.innerText = newScore;
+
+            let s1 = parseInt(score1.innerText);
+            let s2 = parseInt(score2.innerText);
+
+            if ((s1 >= 25 || s2 >= 25) && Math.abs(s1 - s2) >= 2) {
+                if (s1 > s2) {
+                    set1.innerText = parseInt(set1.innerText) + 1;
+                } else {
+                    set2.innerText = parseInt(set2.innerText) + 1;
+                }
+                score1.innerText = 0;
+                score2.innerText = 0;
+            }
+        }
+    </script>
+</body>
+
+</html>
